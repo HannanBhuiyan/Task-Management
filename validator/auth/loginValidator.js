@@ -1,34 +1,35 @@
 const {body} = require('express-validator')
 const User = require('../../models/UserModel')
+const bcrypt = require('bcrypt')
+
 module.exports = [
      body('username')
      .notEmpty()
      .withMessage('Username is required')
+     .isLength({ max: 15})
+     .withMessage('Username max lenght 15 characters')
      .custom( async username => {
           let existsUsername = await User.findOne({username})
-          if(existsUsername){
-               throw new Error('Username already exists')
+          if(!existsUsername){
+               throw new Error('Username not found')
           }
-     }), 
-
-     body('email')
-     .notEmpty()
-     .withMessage("Email field is required")
-     .isEmail()
-     .withMessage('Enter a valid email')
-     .custom(async email => {
-          let existsEmail = await User.findOne({email})
-          if(existsEmail){
-               throw new Error('Email already exists')
-          }
-     }),
+          return true
+     })
+     .trim(), 
      body('password')
      .notEmpty()
-     .withMessage('Password field is required'),
-     body('phone')
-     .notEmpty()
-     .withMessage('Phone number is required'),
-     body('confirm_password')
-     .notEmpty()
-     .withMessage('Confirm password is required')
+     .withMessage('Password field is required')
+     .isLength({min:5})
+     .withMessage('Password min lenght 5 characters')
+     .custom( async (passowrd, {req}) => {
+          let user = await User.findOne({username: req.body.username})
+          if(user){
+               let match = await bcrypt.compare(passowrd, user.password)
+               if(!match){
+                    throw new Error("Password does not match")
+               }
+          }
+          return true
+     }),
+      
 ]

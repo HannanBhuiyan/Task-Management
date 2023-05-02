@@ -32,25 +32,27 @@
                             <div class="card-body">
                                 <div class="px-3"> 
                                     <form class="form-horizontal auth-form my-4" action="/login" method="post">
-                                        <div class="form-group"> 
+                                        <div class="form-group">
                                             <label for="username">Username</label>
                                             <div class="input-group mb-3">
-                                                <span class="auth-form-icon">
-                                                    <i class="dripicons-user"></i> 
-                                                </span>                                                                                                              
-                                                <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
+                                                 <span class="auth-form-icon">
+                                                      <i class="dripicons-user"></i> 
+                                                 </span>                        
+                                                 <input type="text" name="username" class="form-control <%= value.username ? 'is-valid' : '' %> <%= error.username ? 'is-invalid' : '' %>" value="<%= value.username ? value.username : '' %>" id="username" placeholder="Enter username">
                                             </div>                                    
-                                        </div><!--end form-group--> 
+                                            <small class="text-danger" style="font-size: 16px"><%= error.username && error.username %></small>
+                                       </div><!--end form-group--> 
             
-                                        <div class="form-group">
-                                            <label for="userpassword">Password</label>                                            
-                                            <div class="input-group mb-3"> 
-                                                <span class="auth-form-icon">
-                                                    <i class="dripicons-lock"></i> 
-                                                </span>                                                       
-                                                <input type="password" name="password" class="form-control" id="userpassword" placeholder="Enter password">
-                                            </div>                               
-                                        </div><!--end form-group--> 
+                                       <div class="form-group">
+                                        <label for="userpassword">Password</label>                                            
+                                        <div class="input-group mb-3"> 
+                                             <span class="auth-form-icon">
+                                                  <i class="dripicons-lock"></i> 
+                                             </span>                                                       
+                                             <input type="password" name="password" class="form-control <%= value.password ? 'is-valid' : '' %> <%= error.password ? 'is-invalid' : '' %>" value="<%= value.password ? value.password : '' %>" id="userpassword" placeholder="Enter password">
+                                        </div>
+                                        <small class="text-danger" style="font-size: 16px"><%= error.password && error.password %></small>                               
+                                    </div><!--end form-group--> 
             
                                         <div class="form-group row mt-4">
                                             <div class="col-sm-6">

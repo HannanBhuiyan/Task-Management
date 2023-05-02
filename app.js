@@ -7,6 +7,7 @@ const setMiddleware = require('./middleware/middleware')
 const port = config.app.port
 require('./config/db');
  
+ 
 
 app.set('view engine', 'ejs')
 app.set('views', 'views')
@@ -17,7 +18,6 @@ setMiddleware(app)
 setUpRoute(app)
 
  
-
  
 app.get('/dashboard', function(req, res){
      return res.render('../views/dashboard/dashboard.ejs', {

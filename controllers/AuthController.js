@@ -47,30 +47,42 @@ exports.signUpPostController = async (req, res) => {
 }
 
 exports.loginGetController = (req, res, next) => {
+     console.log(req.session.isLoggin, req.session.user)
      return res.render('../views/dashboard/login.ejs',
      {
-          title: "Login account"
+          title: "Login account",
+          error: {},
+          value: {}
      });
 }
 
 exports.loginPostController = async (req, res, next) => {
 
      const {username, password} = req.body
+     let user = await User.findOne({username}) 
      
-     const user = await User.findOne({username})
-     if(!user) {
-          return res.json({ message: "invalid user"})
+     const errors = validationResult(req).formatWith(error => error.msg)
+     
+     if(!errors.isEmpty()){
+      return res.render('../views/dashboard/login.ejs', 
+      {
+          title: "Login account",
+          error: errors.mapped(),
+          value: { username,password}
+      })
      }
+ 
 
-     let match = await bcrypt.compare(password, user.password)
-     if(!match){
-          return res.json({ message: "invalid password"})
-     }
-
-     console.log('loggin');
+     req.session.isLoggin=true
+     req.session.user=user
+     
+     console.log('loggind')
+     
      return res.render('../views/dashboard/login.ejs',
      {
-          title: "Login account"
+          title: "Login account",
+          value: {},
+          error: {}
      });
      
 
