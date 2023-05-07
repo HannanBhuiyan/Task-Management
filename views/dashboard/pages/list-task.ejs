@@ -1,0 +1,126 @@
+
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/topbar.ejs') %>
+<%- include('../partials/leftSidebar.ejs') %>
+
+<div class="page-wrapper">
+    <!-- Page Content-->
+    <div class="page-content">
+ 
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="float-right">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Task Management</a></li> 
+                                <li class="breadcrumb-item active">New Task</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">New Task</h4>
+                    </div><!--end page-title-box-->
+                </div><!--end col-->
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <% tasklist.forEach( (item) => {  %>
+                    <%
+                     
+                        let time = `${item.createdAt.getDay()}/${item.createdAt.getMonth() + 1}/${item.createdAt.getFullYear()}`
+                    %>
+                    <div class="col-md-4"> 
+                        <div class="card">
+                            <div class="card-body">
+                                <h4><%= item.taskName %></h4>
+                                <p><%= item.taskDescription %></p>
+                                <div class="task-card-bottom d-flex justify-content-between">
+                                    <div class="left d-flext">
+                                        <i class="fas fa-calendar"></i><span class="ml-2"><%= time %></span>
+                                        <a data-toggle="modal" data-target="#editModal<%= item.id %>" class="mx-2"><i class="fas fa-edit"></i></a>
+               <a data-toggle="modal" data-target="#deleteModal<%= item.id %>" ><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                    <div class="right">
+                                        <span class="badge badge-warning">New</span>
+                                    </div>
+                                </div>                         
+                            </div><!--end card-body-->
+                        </div><!--end card-->                         
+                    </div><!-- end col--> 
+
+
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="deleteModal<%= item.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Update Task</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body"> 
+                                <p>Are you sure </p>   
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <a href="/task/delete/<%= item.id %>" type="submit" class="btn btn-primary">Delete</a>
+                            </div> 
+                            </div>
+                        </div>
+                    </div>
+               <% }) %>
+            </div><!--end row--> 
+
+        </div><!-- container -->
+
+        <footer class="footer text-center text-sm-left">
+            &copy; 2020 Crovex <span class="text-muted d-none d-sm-inline-block float-right">Crafted with <i class="mdi mdi-heart text-danger"></i> by Mannatthemes</span>
+        </footer><!--end footer-->
+    </div>
+    <!-- end page content -->
+</div>
+<!-- end page-wrapper -->
+ 
+<% tasklist.forEach( (item) => {  %>
+
+ <!-- Modal -->
+<div class="modal fade" id="editModal<%= item.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update Task</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="/task/update/<%= item.id %>" method="post">
+                <div class="form-group">
+                    <label>Task Name</label>
+                    <input type="text" value="<%= item.taskName %>" name="taskName" class="form-control"> 
+                </div>
+                <div class="form-group">
+                    <label>Task Description</label>
+                    <textarea name="taskDescription" id="" cols="30" rows="5" class="form-control"> <%= item.taskDescription %></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Task Status</label>
+                    <select name="status" class="form-control">
+                        <option <%= item.status === 'new' ? 'selected' : '' %> value="new">New</option>
+                        <option <%= item.status === 'complete' ? 'selected' : '' %> value="complete">Completed</option>
+                        <option <%= item.status === 'progress' ? 'selected' : '' %> value="progress">Progress</option>
+                        <option <%= item.status === 'cancel' ? 'selected' : '' %> value="cancel">Cancel</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form> 
+        </div>
+    </div>
+</div>
+<% }) %>
+<%- include('../partials/footer.ejs') %>

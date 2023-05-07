@@ -23,7 +23,7 @@ exports.signUpPostController = async (req, res) => {
      {
           title: "Create new account",
           error: errors.mapped(),
-          value: { username, email, password, phone , confirm_password}
+          value: { username, email, password, phone , confirm_password},
      })
     }
 
@@ -59,7 +59,6 @@ exports.loginGetController = (req, res, next) => {
 exports.loginPostController = async (req, res, next) => {
 
      const {username, password} = req.body
-     let user = await User.findOne({username}) 
      
      const errors = validationResult(req).formatWith(error => error.msg)
      
@@ -68,27 +67,31 @@ exports.loginPostController = async (req, res, next) => {
       {
           title: "Login account",
           error: errors.mapped(),
-          value: { username,password}
+          value: { username, password}
       })
      }
  
-
-     req.session.isLoggin=true
-     req.session.user=user
-     
-     console.log('loggind')
-     
-     return res.render('../views/dashboard/login.ejs',
-     {
-          title: "Login account",
-          value: {},
-          error: {}
-     });
-     
-
-
+     try {
+          let user = await User.findOne({username}) 
+          req.session.isLoggin=true
+          req.session.user=user
+          req.session.save(err => {
+               if(err) {
+                    res.send(err)
+               }
+               return res.redirect('/dashboard')
+          })
+     }
+     catch(error) {
+          res.status(500).send(error)
+     }
 }
 
 exports.logoutController = (req, res, next) => {
-
+     req.session.destroy( error => {
+          if(error){
+               res.send(error)
+          }
+     })
+     return res.redirect('/')
 }

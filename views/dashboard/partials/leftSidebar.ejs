@@ -1,15 +1,25 @@
   <!-- Left Sidenav -->
   <div class="left-sidenav">
      <ul class="metismenu left-sidenav-menu">
-          
-          <li class="<%= currentUrl === '/dashboard/' ? 'mm-active' : '' %> ">
+          <%= currentUrl %>
+          <li class="<%= currentUrl === '/' ? 'mm-active' : '' %> ">
                <a href="/dashboard"><i class="ti-bar-chart"></i><span>Dashboard</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
           </li> 
-          
-          <li class=" <%= currentUrl === '/new-task' ? 'mm-active' : '' %> ">
-               <a href="/new-task"><i class="ti-bar-chart"></i><span>Create Task</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+          <li class=" <%= currentUrl === '/create' ? 'mm-active' : '' %> ">
+               <a href="/task/create"><i class="ti-bar-chart"></i><span>Create Task</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
           </li> 
-            
+          <li class=" <%= currentUrl === '/list' ? 'mm-active' : '' %> ">
+               <a href="/task/list"><i class="ti-bar-chart"></i><span>New Task</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+          </li>
+          <li class=" <%= currentUrl === '/progress' ? 'mm-active' : '' %> ">
+               <a href="/task/progress"><i class="ti-bar-chart"></i><span> In Progress</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+          </li>  
+          <li class=" <%= currentUrl === '/complete' ? 'mm-active' : '' %> ">
+               <a href="/task/complete"><i class="ti-bar-chart"></i><span>Completed</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+          </li>  
+          <li class=" <%= currentUrl === '/cancel' ? 'mm-active' : '' %> ">
+               <a href="/task/cancel"><i class="ti-bar-chart"></i><span>Cancel</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+          </li>  
      </ul>
  </div>
  <!-- end left-sidenav-->
