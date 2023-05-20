@@ -1,0 +1,121 @@
+ 
+<%- include('../../partials/header.ejs') %>
+<%- include('../../partials/topbar.ejs') %>
+<%- include('../../partials/leftSidebar.ejs') %>
+
+<div class="page-wrapper">
+    <!-- Page Content-->
+    <div class="page-content">
+ 
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="float-right">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">All Contacts</a></li> 
+                                <li class="breadcrumb-item active">Contacts</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Contacts</h4>
+                    </div><!--end page-title-box-->
+                </div><!--end col-->
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                 <div class="col-12">
+                  <% if(message) { %>
+                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                         <%= message.message %>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div> 
+                    <% } %>
+                 
+                    <div class="add_contact_btn mb-3" style="text-align: end;">
+                         <a href="/contact/create/" class="btn btn-warning">Add Contact</a>
+                    </div>
+                    <table class="table table-bordered text-center">
+                         <thead>
+                           <tr>
+                             <th scope="col">Checked</th>
+                             <th scope="col">Name</th>
+                             <th scope="col">Email</th>
+                             <th scope="col">Action</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                          <% allContacts.forEach( (item) => { %>
+                            <tr> 
+                              <td>
+                                <input type="checkbox">
+                                </td>
+                                <td><%= item.name %></td>
+                                <td><%= item.email %></td>
+                                <td><img width="80px" src="<%= item.image %>" alt="image"></td>
+                                <td>
+                                      <a href="/contact/edit/<%= item.id %>" class="btn btn-info">Edit</a>
+                                      <a href="#" data-toggle="modal" data-target="#ContactDeleteModal<%= item.id %>" class="btn btn-danger">Delete</a>
+                                </td>
+                              </tr> 
+
+                              <!-- Delete Modal -->
+                            <div class="modal fade" id="ContactDeleteModal<%= item.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Update Task</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-body"> 
+                                      <p>Are you sure </p>   
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      <a href="/contact/delete/<%= item.id %>" type="submit" class="btn btn-danger">Delete</a>
+                                  </div> 
+                                  </div>
+                              </div>
+                          </div> 
+
+                          <% }) %>
+                            
+                             
+                         </tbody>
+                       </table>
+                       <div class="pagination_section">
+                        <nav aria-label="...">
+                          <ul class="pagination justify-content-end">
+                            <li class="page-item disabled">
+                              <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active">
+                              <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                              <a class="page-link" href="#">Next</a>
+                            </li>
+                          </ul>
+                        </nav>
+                       </div>
+                 </div>
+            </div><!--end row--> 
+
+        </div><!-- container -->
+
+        <footer class="footer text-center text-sm-left">
+            &copy; 2020 Crovex <span class="text-muted d-none d-sm-inline-block float-right">Crafted with <i class="mdi mdi-heart text-danger"></i> by Mannatthemes</span>
+        </footer><!--end footer-->
+    </div>
+    <!-- end page content -->
+</div>
+<!-- end page-wrapper -->
+ 
+ 
+<%- include('../../partials/footer.ejs') %>

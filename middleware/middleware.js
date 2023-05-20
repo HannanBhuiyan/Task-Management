@@ -5,6 +5,9 @@ const config = require('../config/config')
 const { bindUserWithRequest } = require('../middleware/authMiddleware')
 const { setLocalsMiddleware } = require('../middleware/setLocalMiddleware')
 
+
+ 
+
 const middleware = [
      express.urlencoded({ extended : true}),
      express.json(),
@@ -18,6 +21,7 @@ const middleware = [
                collection: 'session'
           })
      }),
+    
      bindUserWithRequest(),
      setLocalsMiddleware()
 ]

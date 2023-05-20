@@ -2,7 +2,9 @@ const setLocalsMiddleware  = () => {
      return (req, res, next) => {
           res.locals.user = req.user
           res.locals.isLoggin = req.session.isLoggin
-          next()
+          res.locals.message = req.session.message;
+          delete req.session.message;
+          next(); 
      }
 }
 

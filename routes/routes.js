@@ -1,8 +1,13 @@
 const authRouter = require('./authRoute')
 const dashboardRoute = require('./dashboardRoute')
 const taskRoute = require('./taskRoute')
+const contactRoute = require('./contactRoute')
 
 const routes = [
+     {
+          path: '/contact',
+          handler: contactRoute
+     },
      {
           path: '/task',
           handler: taskRoute
